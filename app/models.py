@@ -3,16 +3,16 @@ from datetime import datetime
 from typing import List, Optional
 
 # Modelo para conciertos
+# Modelo actualizado para conciertos
 class ConcertModel(BaseModel):
-    id: int
+    id: str = Field(..., alias="_id", description="ID del concierto en formato string")
     name: str = Field(..., min_length=3, max_length=100, description="Nombre del concierto")
     date: datetime = Field(..., description="Fecha y hora del concierto")
     venue: str = Field(..., min_length=3, max_length=100, description="Lugar del concierto")
-    available_tickets: int = Field(..., ge=0, description="Cantidad de tickets disponibles")
-    genres: Optional[List[str]] = Field(default=[], description="Lista de géneros del concierto")
 
     class Config:
         orm_mode = True
+        allow_population_by_field_name = True
 
 # Modelo para tickets
 class TicketModel(BaseModel):
